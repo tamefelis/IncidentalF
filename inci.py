@@ -72,8 +72,8 @@ if uploaded_file is not None:
      # Ensure that 'Findings_List' is created in the filtered_data
     filtered_data = preprocess_data(filtered_data)
     # Filters for PI Verification and Severity
-    pi_verification = st.sidebar.multiselect('Filter by PI Verification', options=filtered_data['contacting participation by PI verification?'].unique())
-    severity = st.sidebar.multiselect('Filter by Severity', options=filtered_data['severity'].unique())
+    pi_verification = st.sidebar.multiselect('Filter by PI Verification (if is blank = yet to update)', options=filtered_data['contacting participation by PI verification?'].unique())
+    severity = st.sidebar.multiselect('Filter by Severity (if is blank = yet to update)', options=filtered_data['severity'].unique())
 
     if pi_verification:
         filtered_data = filtered_data[filtered_data['contacting participation by PI verification?'].isin(pi_verification)]
