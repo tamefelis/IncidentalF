@@ -162,7 +162,7 @@ if uploaded_file is not None:
     )
     st.plotly_chart(fig1)
     st.caption(f"Out of {total_visits} total visits from {formatted_start_date} to {formatted_end_date}, {non_nil_visits} are not 'NIL' and {nil_visits} are 'NIL'.")
-    st.caption(f"The most frequent clinical parameter across all participants is **'{most_frequent_parameter}'** "
+    st.caption(f"The most frequent clinical parameter across all visits is **'{most_frequent_parameter}'** "
              f"with a total occurrence of {most_frequent_count} times.")
 
     
