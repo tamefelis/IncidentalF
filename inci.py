@@ -185,7 +185,7 @@ if uploaded_file is not None:
         clinical_params_counts = clinical_params.value_counts().reset_index()
         clinical_params_counts.columns = ['Clinical Parameter', 'Counts']
         fig_treemap = px.treemap(clinical_params_counts, path=['Clinical Parameter'], values='Counts', title='Distribution of Clinical Parameters in Treemap')
-        #st.plotly_chart(fig_treemap)
+        st.plotly_chart(fig_treemap)
     else:
         st.write("Processed Clinical Parameters column not found in the data.")
     
