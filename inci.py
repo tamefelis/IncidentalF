@@ -48,7 +48,26 @@ def create_longitudinal_view(data):
     # Create a pivot table with 'Study ID' as index and 'Visit_Type' as columns
     transformed_data = data.pivot_table(index='Study ID', columns='Visit_Type', values='clinical parameters', aggfunc='first')
     return transformed_data
+    
+def create_cumulative_bar_chart(filtered_data):
+    # Categorize events as 'NIL' or 'Non-NIL'
+    filtered_data['Event_Category'] = filtered_data['clinical parameters'].apply(lambda x: 'NIL' if str(x).strip().lower() == 'nil' else 'Non-NIL')
 
+    # Aggregate data by 'Visit_Type' and 'Event_Category'
+    event_counts = filtered_data.groupby(['Visit_Type', 'Event_Category']).size().reset_index(name='Counts')
+
+    # Create the bar chart
+    fig = px.bar(event_counts, x='Visit_Type', y='Counts',
+                 color='Event_Category',  # Differentiates 'NIL' and 'Non-NIL'
+                 title='Cumulative Events by Visit Type',
+                 labels={'Counts': 'Cumulative Count of Events', 'Visit_Type': 'Type of Visit'},
+                 barmode='stack')  # Stacks 'NIL' and 'Non-NIL' counts
+
+    # Customize layout
+    fig.update_layout(xaxis_title='Type of Visit',
+                      yaxis_title='Cumulative Count of Events')
+
+    return fig
 
 # Streamlit Layout
 st.title('Participant Incidental Findings Dashboard')
@@ -102,6 +121,7 @@ if uploaded_file is not None:
     
     formatted_start_date = start_date.strftime('%Y-%m-%d')
     formatted_end_date = end_date.strftime('%Y-%m-%d')
+    
     # Create a bar chart for the summary
     fig_summary = px.bar(findings_summary, x=findings_summary.index, y=findings_summary.values, title='Incidental Findings Summary')
      # Create a bar chart for the summary with aesthetic enhancements
@@ -189,6 +209,9 @@ if uploaded_file is not None:
     else:
         st.write("Processed Clinical Parameters column not found in the data.")
     
+    # Create and display the cumulative bar chart
+    cumulative_bar_chart_fig = create_cumulative_bar_chart(filtered_data)
+    st.plotly_chart(cumulative_bar_chart_fig)
     
     st.markdown("***")
 
