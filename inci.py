@@ -152,6 +152,10 @@ if uploaded_file is not None:
         opacity=0.6
     )
     st.plotly_chart(fig_summary)
+
+    # Create and display the cumulative bar chart
+    cumulative_bar_chart_fig = create_cumulative_bar_chart(filtered_data)
+    st.plotly_chart(cumulative_bar_chart_fig)
     
     # Prepare Data for Treemap and Summary
     all_findings = filtered_data.explode('Findings_List')
@@ -209,9 +213,7 @@ if uploaded_file is not None:
     else:
         st.write("Processed Clinical Parameters column not found in the data.")
     
-    # Create and display the cumulative bar chart
-    cumulative_bar_chart_fig = create_cumulative_bar_chart(filtered_data)
-    st.plotly_chart(cumulative_bar_chart_fig)
+
     
     st.markdown("***")
 
