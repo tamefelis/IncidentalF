@@ -59,7 +59,7 @@ def create_cumulative_bar_chart(filtered_data):
     # Create the bar chart
     fig = px.bar(event_counts, x='Visit_Type', y='Counts',
                  color='Event_Category',  # Differentiates 'NIL' and 'Non-NIL'
-                 title='Cumulative Events by Visit Type',
+                 title='Cumulative Incidental findings by Type of Visit',
                  labels={'Counts': 'Cumulative Count of Events', 'Visit_Type': 'Type of Visit'},
                  barmode='stack')  # Stacks 'NIL' and 'Non-NIL' counts
 
