@@ -56,18 +56,23 @@ def create_cumulative_bar_chart(filtered_data):
     # Aggregate data by 'Visit_Type' and 'Event_Category'
     event_counts = filtered_data.groupby(['Visit_Type', 'Event_Category']).size().reset_index(name='Counts')
 
-    # Create the bar chart
+    # Define specific colors for each category
+    color_map = {"NIL": "rgb(55, 83, 109)", "Non-NIL": "rgb(26, 118, 255)"}
+
+    # Create the bar chart with specific colors
     fig = px.bar(event_counts, x='Visit_Type', y='Counts',
                  color='Event_Category',  # Differentiates 'NIL' and 'Non-NIL'
                  title='Cumulative Incidental findings by Type of Visit',
                  labels={'Counts': 'Cumulative Count of Events', 'Visit_Type': 'Type of Visit'},
-                 barmode='stack')  # Stacks 'NIL' and 'Non-NIL' counts
+                 barmode='stack',  # Stacks 'NIL' and 'Non-NIL' counts
+                 color_discrete_map=color_map)  # Apply the specific colors
 
     # Customize layout
     fig.update_layout(xaxis_title='Type of Visit',
                       yaxis_title='Cumulative Count of Events')
 
     return fig
+
 
 # Streamlit Layout
 st.title('Participant Incidental Findings Dashboard')
@@ -155,10 +160,7 @@ if uploaded_file is not None:
 
     # Create and display the cumulative bar chart
     cumulative_bar_chart_fig = create_cumulative_bar_chart(filtered_data)
-    cumulative_bar_chart_fig.update_traces(
-            marker_color='rgb(55, 83, 109)',  # Set a specific color for all bars
-            
-        )
+
     st.plotly_chart(cumulative_bar_chart_fig)
     
     # Prepare Data for Treemap and Summary
