@@ -155,6 +155,10 @@ if uploaded_file is not None:
 
     # Create and display the cumulative bar chart
     cumulative_bar_chart_fig = create_cumulative_bar_chart(filtered_data)
+    cumulative_bar_chart_fig.update_traces(
+            marker_color='rgb(55, 83, 109)',  # Set a specific color for all bars
+            
+        )
     st.plotly_chart(cumulative_bar_chart_fig)
     
     # Prepare Data for Treemap and Summary
